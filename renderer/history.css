@@ -1,0 +1,158 @@
+/* Akiri Browser — страница «История» в единой дизайн-системе. */
+:root {
+  --bg: #1b1c1f;
+  --surface: #26272c;
+  --surface-2: #2f3138;
+  --field: #141518;
+  --fg: #e9eaed;
+  --dim: #9a9ea8;
+  --accent: #5b8cff;
+  --danger: #f0615a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+}
+
+#wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+h1 { font-size: 22px; font-weight: 650; }
+
+.head-actions { display: flex; gap: 8px; align-items: center; }
+
+.search {
+  background: var(--field);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 12px;
+  width: 220px;
+  outline: none;
+}
+.search:focus { border-color: var(--accent); }
+.search::placeholder { color: var(--dim); }
+
+.btn {
+  background: var(--surface-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.09); }
+.btn.danger { color: var(--danger); }
+.btn.danger:hover { background: rgba(240, 97, 90, 0.14); }
+
+.group { margin-bottom: 22px; }
+
+.group-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--dim);
+  margin-bottom: 8px;
+  padding-left: 2px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.item:hover { background: var(--surface-2); }
+
+.item-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: var(--surface-2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dim);
+  overflow: hidden;
+}
+.item-icon img { width: 18px; height: 18px; }
+
+.item-body { flex: 1; min-width: 0; }
+.item-title {
+  font-size: 13.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--fg);
+}
+.item:hover .item-title { color: var(--accent); }
+.item-url {
+  font-size: 12px;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.item-time {
+  font-size: 12px;
+  color: var(--dim);
+  flex-shrink: 0;
+}
+
+.item-del {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: transparent;
+  border: none;
+  color: var(--dim);
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.12s, background 0.12s;
+}
+.item:hover .item-del { opacity: 1; }
+.item-del:hover { background: rgba(240, 97, 90, 0.16); color: var(--danger); }
+
+.empty {
+  text-align: center;
+  color: var(--dim);
+  padding: 60px 20px;
+  line-height: 1.7;
+  font-size: 13.5px;
+}
+
+.hidden { display: none !important; }

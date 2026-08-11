@@ -1,0 +1,54 @@
+{
+  "name": "akiri-browser",
+  "productName": "Akiri Browser",
+  "version": "0.17.1",
+  "description": "Личный браузер на Electron: вкладки, закладки, история, инкогнито",
+  "author": "Akiri",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "predist": "node tools/fix-7za.js",
+    "dist": "electron-builder --win"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.akiri.browser",
+    "productName": "Akiri Browser",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Akiri Browser",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "Akiri Browser Setup ${version}.${ext}"
+    }
+  }
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'none';" />
+  <title>Akiri Browser</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- вкладки сверху, как в Chrome -->
+  <div id="tabstrip">
+    <div id="tabs"></div>
+    <button id="btn-newtab" title="Новая вкладка (Ctrl+T)">+</button>
+    <div id="findbar" class="hidden">
+      <input id="find-input" placeholder="Найти на странице" spellcheck="false" />
+      <span id="find-count">0/0</span>
+      <button id="find-prev" class="find-btn" title="Предыдущее (Shift+Enter)">&#9650;</button>
+      <button id="find-next" class="find-btn" title="Следующее (Enter)">&#9660;</button>
+      <button id="find-close" class="find-btn" title="Закрыть (Esc)">&#10005;</button>
+    </div>
+  </div>
+
+  <!-- панель навигации (всё, что не страница, рисуется в этой зоне — она не перекрывается вкладкой) -->
+  <div id="topbar">
+    <div id="nav">
+      <button id="btn-back" class="nav-btn" title="Назад (Alt+←)" disabled>
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M15.5 5.5 9 12l6.5 6.5-1.5 1.5L6 12l8-8z"/></svg>
+      </button>
+      <button id="btn-fwd" class="nav-btn" title="Вперёд (Alt+→)" disabled>
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M8.5 5.5 15 12l-6.5 6.5L10 20l8-8-8-8z"/></svg>
+      </button>
+      <button id="btn-reload" class="nav-btn" title="Обновить (Ctrl+R)">
+        <svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M12 4a8 8 0 1 0 8 8h-2.5A5.5 5.5 0 1 1 12 6.5c1.9 0 3.6.95 4.6 2.4L13 12.5h8v-8l-2.6 2.6A9.97 9.97 0 0 0 12 2 10 10 0 1 0 22 12h-2.5A7.5 7.5 0 1 1 12 4z"/></svg>
+      </button>
+      <button id="btn-home" class="nav-btn" title="Домой — Google (Alt+Home)">
+        <svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M12 3 2 12h3v9h5v-6h4v6h5v-9h3z"/></svg>
+      </button>
+    </div>
+
+    <form id="address-form" autocomplete="off">
+      <input id="address" placeholder="Поиск или адрес сайта" spellcheck="false" />
+      <span id="address-go">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+      </span>
+    </form>
+
+    <div id="top-actions">
+      <button id="btn-update" class="update-chip hidden" title="Доступно обновление — откройте «О браузере»" data-action="open-about">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M12 4l-5 5h3v6h4V9h3zM5 19h14v-2H5z"/></svg>
+        <span id="update-version"></span>
+      </button>
+      <button id="btn-bookmark" class="icon-btn" title="В закладки (Ctrl+D)">
+        <svg id="star-empty" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 17.3 6.2 20l1.1-6.5L2.5 9.2l6.5-1L12 2l3 6.2 6.5 1-4.8 4.3L17.8 20z"/></svg>
+        <svg id="star-filled" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 17.3 6.2 20l1.1-6.5L2.5 9.2l6.5-1L12 2l3 6.2 6.5 1-4.8 4.3L17.8 20z"/></svg>
+      </button>
+      <button id="btn-menu" class="icon-btn" title="Закладки, история, загрузки">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- выпадающие панели живут здесь: эта полоса расширяет chrome-зону,
+       и страница (WebContentsView) временно поджимается — так оверлеи не перекрываются вкладкой -->
+  <div id="overlays">
+    <div id="suggest" class="hidden"></div>
+    <!-- поиск вкладок (Ctrl+Shift+A, как в Chrome) -->
+    <div id="tabsearch" class="hidden">
+      <input id="tabsearch-input" placeholder="Поиск вкладок…" spellcheck="false" />
+      <div id="tabsearch-list"></div>
+    </div>
+    <div id="dropdown" class="hidden">
+      <div class="dd-section">
+        <div class="dd-title">Загрузки</div>
+        <div id="dd-downloads" class="dd-list"></div>
+      </div>
+      <div class="dd-section">
+        <div class="dd-title">Закладки</div>
+        <div id="dd-bookmarks" class="dd-list"></div>
+      </div>
+      <div class="dd-section">
+        <div class="dd-title">История</div>
+        <div id="dd-history" class="dd-list"></div>
+      </div>
+      <div class="dd-sep"></div>
+      <button class="dd-item" data-action="new-tab">Новая вкладка</button>
+      <button class="dd-item" data-action="close-tab">Закрыть вкладку</button>
+      <button class="dd-item" data-action="reload">Перезагрузить</button>
+      <button class="dd-item" data-action="fullscreen">Полный экран (F11)</button>
+      <button class="dd-item" data-action="clear-data">Очистить данные браузера…</button>
+      <div class="dd-sep"></div>
+      <button class="dd-item" id="dd-ai" data-action="ai-open">AI-ассистент</button>
+      <button class="dd-item" data-action="open-passwords">Менеджер паролей</button>
+      <button class="dd-item" data-action="open-settings">Настройки (Ctrl+,)</button>
+      <div class="dd-sep"></div>
+      <div id="dd-about" class="dd-about"></div>
+    </div>
+  </div>
+
+  <!-- строка контента: боковая панель + страница + AI-панель (как в Chrome) -->
+  <div id="content">
+    <aside id="siderail">
+      <button class="rail-btn" data-action="show-menu" title="Закладки, история, загрузки">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 3h8v2H8V7zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/></svg>
+      </button>
+      <button class="rail-btn" data-action="open-history" title="История (Ctrl+H)">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10h-2A8 8 0 1 1 12 4c2.4 0 4.5 1 6 2.7V4h2v6h-6V8h2.7A7 7 0 0 0 12 4zm1 5v5l4 2.4-.9 1.6-5-3V7h1.9z"/></svg>
+      </button>
+      <button id="rail-ai" class="rail-btn ai" data-action="ai-open" title="AI-ассистент">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M12 2l2.1 6.2L20 10l-5.9 1.8L12 18l-2.1-6.2L4 10l5.9-1.8L12 2z"/><path fill="currentColor" d="M19 15l.9 2.6 2.6.9-2.6.9L19 22l-.9-2.6-2.6-.9 2.6-.9L19 15z"/></svg>
+      </button>
+      <button class="rail-btn" data-action="open-passwords" title="Менеджер паролей">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M7 14a3 3 0 1 1 2.5 2.9V19H12v2H9.5v-2.1A3 3 0 0 1 7 14zm0-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9.5 2a3 3 0 1 1 2.5 2.9V19H21v2h-2.5v-2.1A3 3 0 0 1 16.5 14zm0-2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM6 3h12v4.6l-1.5 1.5V5H7.5v14h3V21h-3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3.5 2v3h6V5h-6z"/></svg>
+      </button>
+      <button class="rail-btn" data-action="open-settings" title="Настройки (Ctrl+,)">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm0 6a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm9-4h-2.1a7 7 0 0 0-.4-1.4l1.5-1.5-1.4-1.4-1.5 1.5a7 7 0 0 0-1.4-.4V5h-2v2.1a7 7 0 0 0-1.4.4L10.8 6l-1.4 1.4 1.5 1.5a7 7 0 0 0-.4 1.4H8v2h2.1a7 7 0 0 0 .4 1.4l-1.5 1.5 1.4 1.4 1.5-1.5a7 7 0 0 0 1.4.4V21h2v-2.1a7 7 0 0 0 1.4-.4l1.5 1.5 1.4-1.4-1.5-1.5a7 7 0 0 0 .4-1.4H21zm-2 0h-1.2l-.2.8a5 5 0 0 1-3.4 3.4L14 15.2V14H10v1.2l-.2.2a5 5 0 0 1-3.4-3.4L6.2 12H5v-2h1.2l.2-.8a5 5 0 0 1 3.4-3.4L10 5.8V7h4V5.8l.2-.2a5 5 0 0 1 3.4 3.4l.2.8H19z"/></svg>
+      </button>
+      <button class="rail-btn" data-action="open-downloads" title="Загрузки (Ctrl+J)">
+        <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M12 3l-1.4 1.4L14.2 8H5v2h9.2l-3.6 3.6L12 15l6-6-6-6zm-7 14h14v2H5v-2z"/></svg>
+      </button>
+    </aside>
+    <main id="views"></main>
+
+    <aside id="aipanel" class="hidden">
+      <div class="ai-head">
+        <span class="ai-brand">
+          <span class="ai-logo">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2l2.1 6.2L20 10l-5.9 1.8L12 18l-2.1-6.2L4 10l5.9-1.8L12 2z"/><path fill="currentColor" d="M19 15l.9 2.6 2.6.9-2.6.9L19 22l-.9-2.6-2.6-.9 2.6-.9L19 15z"/></svg>
+          </span>
+          <span>Akiri AI</span>
+          <span id="ai-status" class="ai-status" title="Статус ассистента"></span>
+        </span>
+        <button id="ai-close" class="ai-close" title="Закрыть (Esc)">×</button>
+      </div>
+      <div id="ai-messages"></div>
+      <div id="ai-actions">
+        <button data-ai="summary" title="Краткий пересказ открытой страницы">Кратко о странице</button>
+        <button data-ai="translate" title="Перевести открытую страницу">Перевести</button>
+        <button data-ai="ask" title="Спросить AI про открытую страницу">Спросить о странице</button>
+      </div>
+      <form id="ai-form">
+        <input id="ai-input" placeholder="Спросить AI…" spellcheck="false" autocomplete="off" />
+        <button type="submit" id="ai-send">➤</button>
+      </form>
+      <div id="ai-note">Ключ API не настроен — откройте «Настройки» и вставьте ключ OpenCode Zen.</div>
+    </aside>
+  </div>
+
+  <!-- панель загрузок внизу, как в Chrome (в потоке: пока видна, страница чуть выше) -->
+  <div id="downloadsbar" class="hidden"></div>
+
+  <!-- предложение сохранить пароль -->
+  <div id="passbar" class="hidden">
+    <span id="passbar-text"></span>
+    <button id="passbar-save" class="pass-btn primary">Сохранить</button>
+    <button id="passbar-no" class="pass-btn">Нет</button>
+  </div>
+
+  <div id="toast" class="hidden"></div>
+
+  <!-- WebView2-мост: в Electron неактивен (preload задаёт browserAPI), в WebView2 создаёт browserAPI поверх postMessage -->
+  <script src="webview-bridge.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+/* Akiri Browser — страница «Загрузки» в единой дизайн-системе. */
+:root {
+  --bg: #1b1c1f;
+  --surface: #26272c;
+  --surface-2: #2f3138;
+  --field: #141518;
+  --fg: #e9eaed;
+  --dim: #9a9ea8;
+  --accent: #5b8cff;
+  --danger: #f0615a;
+  --ok: #4cc38a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+}
+
+#wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.head-actions { display: flex; gap: 8px; }
+
+.btn {
+  background: var(--surface-2);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.09); }
+.btn.danger { color: var(--danger); }
+.btn.danger:hover { background: rgba(240, 97, 90, 0.14); }
+
+.list { display: flex; flex-direction: column; gap: 10px; }
+
+.dl {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.dl.done { opacity: 0.92; }
+
+.dl-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dl.done .dl-icon { background: rgba(76, 195, 138, 0.16); }
+.dl.err .dl-icon { background: rgba(240, 97, 90, 0.16); }
+
+.dl-body { flex: 1; min-width: 0; }
+
+.dl-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.dl.done .dl-name:hover { color: var(--accent); }
+
+.dl-url {
+  font-size: 12px;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.dl-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--dim);
+  margin-top: 8px;
+}
+.dl-meta .speed { color: var(--accent); font-weight: 600; }
+.dl-meta .status-ok { color: var(--ok); }
+.dl-meta .status-err { color: var(--danger); }
+
+.bar {
+  height: 4px;
+  background: var(--field);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.bar > div {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+.dl.done .bar > div { background: var(--ok); }
+.dl.err .bar > div { background: var(--danger); }
+
+.dl-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.dl-actions button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: 7px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.dl-actions button:hover { background: rgba(255, 255, 255, 0.08); }
+.dl-actions button.primary { border-color: var(--accent); color: var(--accent); }
+.dl-actions button.primary:hover { background: rgba(91, 140, 255, 0.12); }
+
+.empty {
+  text-align: center;
+  color: var(--dim);
+  padding: 60px 20px;
+  line-height: 1.7;
+  font-size: 13.5px;
+}
+
+.hidden { display: none !important; }

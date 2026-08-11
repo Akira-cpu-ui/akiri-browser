@@ -1,0 +1,86 @@
+
+===== out/electron.bin (1701 bytes) =====
+record: type=22 legacy_version=0x301 length=1696
+client_version: TLS 1.2
+random: ec82f7f7c67eb9d1...
+cipher_suites (16):
+  GREASE 0x7a7a
+  TLS_AES_128_GCM_SHA256
+  TLS_AES_256_GCM_SHA384
+  TLS_CHACHA20_POLY1305_SHA256
+  TLS_ECDHE_ECDSA_AES_128_GCM_SHA256
+  TLS_ECDHE_RSA_AES_128_GCM_SHA256
+  TLS_ECDHE_ECDSA_AES_256_GCM_SHA384
+  TLS_ECDHE_RSA_AES_256_GCM_SHA384
+  TLS_ECDHE_ECDSA_CHACHA20_POLY1305
+  TLS_ECDHE_RSA_CHACHA20_POLY1305
+  0xc013
+  0xc014
+  TLS_RSA_WITH_AES_128_GCM_SHA256
+  TLS_RSA_WITH_AES_256_GCM_SHA384
+  TLS_RSA_WITH_AES_128_CBC_SHA
+  TLS_RSA_WITH_AES_256_CBC_SHA
+compression: [0]
+extensions (17, in order):
+  GREASE 0xdada (len 0)
+  key_share → 0xbaba(GREASE)[key 1B], x25519_kyber768 (post-quantum)[key 1216B], x25519[key 32B]
+  extended_master_secret
+  status_request
+  session_ticket
+  pre_shared_key
+  application_layer_protocol_negotiation (ALPN) → 
+  signed_certificate_timestamp → present
+  renegotiation_info_old
+  ec_point_formats
+  psk_key_exchange_modes → psk_dhe_ke
+  compress_certificate
+  signature_algorithms → 8 algs: 0x403, 0x804, 0x401, 0x503, 0x805, 0x501, 0x806, 0x601
+  0xfe0d
+  supported_groups → 0xbaba(GREASE), x25519_kyber768 (post-quantum), x25519, secp256r1, secp384r1
+  application_settings
+  GREASE 0x8a8a (len 1)
+JA3: 303,7A7A,1301,1302,1303,C02B,C02F,C02C,C030,CCA9,CCA8,C013,C014,9C,9D,2F,35,33,17,5,23,2B,10,12,FF01,B,2D,1B,D,FE0D,A,4469
+JA4: t_c7A7A_e17_8_h2http/1.1
+
+===== out/chrome.bin (1803 bytes) =====
+record: type=22 legacy_version=0x301 length=1798
+client_version: TLS 1.2
+random: 0eabe5082f140048...
+cipher_suites (16):
+  GREASE 0x6a6a
+  TLS_AES_128_GCM_SHA256
+  TLS_AES_256_GCM_SHA384
+  TLS_CHACHA20_POLY1305_SHA256
+  TLS_ECDHE_ECDSA_AES_128_GCM_SHA256
+  TLS_ECDHE_RSA_AES_128_GCM_SHA256
+  TLS_ECDHE_ECDSA_AES_256_GCM_SHA384
+  TLS_ECDHE_RSA_AES_256_GCM_SHA384
+  TLS_ECDHE_ECDSA_CHACHA20_POLY1305
+  TLS_ECDHE_RSA_CHACHA20_POLY1305
+  0xc013
+  0xc014
+  TLS_RSA_WITH_AES_128_GCM_SHA256
+  TLS_RSA_WITH_AES_256_GCM_SHA384
+  TLS_RSA_WITH_AES_128_CBC_SHA
+  TLS_RSA_WITH_AES_256_CBC_SHA
+compression: [0]
+extensions (17, in order):
+  GREASE 0x7a7a (len 0)
+  renegotiation_info_old
+  psk_key_exchange_modes → psk_dhe_ke
+  session_ticket
+  application_layer_protocol_negotiation (ALPN) → 
+  key_share → 0xeaea(GREASE)[key 1B], x25519_kyber768_draft00[key 1216B], x25519[key 32B]
+  supported_groups → 0xeaea(GREASE), x25519_kyber768_draft00, x25519, secp256r1, secp384r1
+  status_request
+  signed_certificate_timestamp → present
+  pre_shared_key
+  ec_point_formats
+  0x44cd
+  0xfe0d
+  extended_master_secret
+  signature_algorithms → 11 algs: 0x904, 0x905, 0x906, 0x403, 0x804, 0x401, 0x503, 0x805, 0x501, 0x806, 0x601
+  compress_certificate
+  GREASE 0xdada (len 1)
+JA3: 303,6A6A,1301,1302,1303,C02B,C02F,C02C,C030,CCA9,CCA8,C013,C014,9C,9D,2F,35,FF01,2D,23,10,33,A,5,12,2B,B,44CD,FE0D,17,D,1B
+JA4: t_c6A6A_e17_11_h2http/1.1

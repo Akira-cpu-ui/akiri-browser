@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src data: https:;" />
+  <title>Настройки</title>
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <main id="wrap">
+    <h1>Настройки Akiri Browser</h1>
+
+    <nav class="page-nav">
+      <a href="history.html">История</a>
+      <a href="downloads.html">Загрузки</a>
+      <a href="about.html">О браузере</a>
+    </nav>
+
+    <section>
+      <h2>Основное</h2>
+      <label>
+        <span>Домашняя страница</span>
+        <input type="text" id="home" placeholder="https://www.google.com/" spellcheck="false" />
+      </label>
+      <label>
+        <span>Что открывать при запуске</span>
+        <select id="startPage">
+          <option value="ntp">Стартовая страница</option>
+          <option value="home">Домашняя страница</option>
+        </select>
+      </label>
+      <label>
+        <span>Что открывает новая вкладка (Ctrl+T)</span>
+        <select id="newTabPage">
+          <option value="ntp">Стартовая страница</option>
+          <option value="home">Домашняя страница</option>
+        </select>
+      </label>
+      <label>
+        <span>Поисковая система</span>
+        <select id="engine">
+          <option value="google">Google</option>
+          <option value="yandex">Яндекс</option>
+          <option value="duckduckgo">DuckDuckGo</option>
+        </select>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="restoreSession" />
+        <span>Восстанавливать сессию после перезапуска</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="saveHistory" />
+        <span>Сохранять историю посещений</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="suggestions" />
+        <span>Подсказки поиска в адресной строке</span>
+      </label>
+      <label>
+        <span>Масштаб страниц по умолчанию (%)</span>
+        <input type="number" id="zoom" min="50" max="300" step="10" />
+      </label>
+    </section>
+
+    <section>
+      <h2>Внешний вид</h2>
+      <label>
+        <span>Акцентный цвет</span>
+        <input type="color" id="accent" />
+      </label>
+      <label class="check">
+        <input type="checkbox" id="sidePanel" />
+        <span>Боковая панель с иконками</span>
+      </label>
+      <div class="field-label">Обои стартовой страницы</div>
+      <div id="wallpapers" class="wp-row">
+        <button class="wp-opt" data-wp="network" title="Светящаяся сеть"><span class="wp-thumb wp-network"></span>Сеть</button>
+        <button class="wp-opt" data-wp="cosmos" title="Космос со звёздами"><span class="wp-thumb wp-cosmos"></span>Космос</button>
+        <button class="wp-opt" data-wp="aurora" title="Северное сияние"><span class="wp-thumb wp-aurora"></span>Аврора</button>
+        <button class="wp-opt" data-wp="gradient" title="Сине-фиолетовый градиент"><span class="wp-thumb wp-gradient"></span>Градиент</button>
+        <button class="wp-opt" data-wp="dark" title="Тёмный"><span class="wp-thumb wp-dark"></span>Тёмный</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Загрузки</h2>
+      <label>
+        <span>Папка для загрузок (пусто = «Загрузки»)</span>
+        <div class="row">
+          <input type="text" id="downloadDir" placeholder="C:\Users\…\Downloads" spellcheck="false" />
+          <button id="pick-dir" class="btn">Выбрать…</button>
+        </div>
+      </label>
+      <button id="open-downloads" class="btn">Открыть папку загрузок</button>
+    </section>
+
+    <section>
+      <h2>Пароли и окна</h2>
+      <label class="check">
+        <input type="checkbox" id="autofillPasswords" />
+        <span>Автозаполнять логины сохранёнными паролями</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="popupWindows" />
+        <span>Всплывающие окна (window.open) — отдельными окнами</span>
+      </label>
+      <p class="hint">Если выключить, все всплывающие окна будут открываться вкладкой (жёсткий блокировщик попапов).</p>
+      <button id="open-passwords" class="btn">Открыть менеджер паролей</button>
+    </section>
+
+    <section id="ai-section">
+      <h2>AI-ассистент</h2>
+      <label class="check">
+        <input type="checkbox" id="aiEnabled" />
+        <span>Включить AI-ассистента</span>
+      </label>
+      <p class="hint">
+        AI необязателен: без ключа браузер работает как обычный. Бесплатный ключ OpenCode Zen — на
+        <a href="https://opencode.ai/zen" target="_blank">opencode.ai/zen</a>.
+      </p>
+      <div id="ai-fields">
+        <label>
+          <span>Адрес API (база)</span>
+          <input type="text" id="baseUrl" spellcheck="false" />
+        </label>
+        <label>
+          <span>Модель</span>
+          <input type="text" id="model" list="freeModels" spellcheck="false" />
+          <datalist id="freeModels"></datalist>
+        </label>
+        <label>
+          <span>Ключ API</span>
+          <input type="password" id="key" placeholder="sk-…" spellcheck="false" />
+        </label>
+        <button id="ai-test" class="btn">Проверить подключение</button>
+        <div id="ai-test-result"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Расширения</h2>
+      <p class="hint">
+        Расширения загружаются из папки с распакованным расширением (папка, где лежит
+        <code>manifest.json</code>). Прямая установка из Chrome Web Store (CRX) в Electron невозможна —
+        скачайте расширение и распакуйте его, либо возьмите папку из
+        <code>%LOCALAPPDATA%\Google\Chrome\User Data\Default\Extensions\…</code>
+        (включите «Режим разработчика» в Chrome → «Загрузить распакованное» не нужно — просто
+        найдите папку версии расширения).
+      </p>
+      <label>
+        <span>Путь к папке расширения</span>
+        <div class="row">
+          <input type="text" id="extPath" placeholder="C:\extensions\my-extension" spellcheck="false" />
+          <button id="ext-load" class="btn">Загрузить</button>
+        </div>
+      </label>
+      <div id="ext-list" class="ext-list"></div>
+      <div id="ext-result"></div>
+    </section>
+
+    <section>
+      <h2>Обновления</h2>
+      <p class="hint">
+        Браузер проверяет файл версий (JSON) по этому адресу при запуске и каждые 6 часов.
+        Формат файла: <code>{"version": "0.12.0", "url": "https://…/setup.exe", "notes": "что нового"}</code>.
+        Когда выйдет новая сборка, обновите этот файл — и всем установленным копиям браузера
+        придёт уведомление «Доступна новая версия».
+        Кнопка <b>«Установить обновление»</b> на странице «О браузере» (☰ → О браузере)
+        скачивает установщик, закрывает браузер, обновляет и открывает новую версию сам.
+      </p>
+      <label>
+        <span>URL файла версий (пусто = выключено)</span>
+        <div class="row">
+          <input type="text" id="updateUrl" placeholder="https://example.com/akiri/version.json" spellcheck="false" />
+          <button id="check-upd" class="btn">Проверить</button>
+        </div>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="autoUpdate" />
+        <span>Автоматически скачивать и устанавливать обновления (как в Chrome)</span>
+      </label>
+      <div id="upd-result"></div>
+    </section>
+
+    <section>
+      <h2>Данные</h2>
+      <p class="hint">Все данные хранятся в обычных файлах JSON в папке приложения:
+        закладки — <code>bookmarks.json</code>, история — <code>history.json</code>,
+        сессия — <code>session.json</code>, настройки — <code>settings.json</code>,
+        пароли (зашифрованы) — <code>passwords.json</code>.</p>
+      <button id="open-data" class="btn">Открыть папку с данными</button>
+      <button id="export-bm" class="btn">Экспорт закладок…</button>
+      <button id="import-bm" class="btn">Импорт закладок…</button>
+      <button id="clear-data" class="btn danger">Очистить историю, куки и кеш…</button>
+    </section>
+
+    <div id="about"></div>
+  </main>
+
+  <div id="saved" class="hidden">Сохранено ✓</div>
+  <script src="settings.js"></script>
+</body>
+</html>

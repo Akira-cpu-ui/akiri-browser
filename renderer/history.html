@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; style-src 'self'; script-src 'self'; img-src data: https:;" />
+  <title>История — Akiri Browser</title>
+  <link rel="stylesheet" href="history.css" />
+</head>
+<body>
+  <main id="wrap">
+    <header class="head">
+      <h1>История</h1>
+      <div class="head-actions">
+        <input id="search" class="search" type="text" placeholder="Поиск по истории…" spellcheck="false" />
+        <button id="clear" class="btn danger">Очистить историю</button>
+      </div>
+    </header>
+    <div id="groups"></div>
+    <div id="empty" class="empty hidden">История пуста.<br />Посещённые сайты будут появляться здесь.</div>
+  </main>
+  <script src="history.js"></script>
+</body>
+</html>

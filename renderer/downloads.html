@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src data: https:;" />
+  <title>Загрузки — Akiri Browser</title>
+  <link rel="stylesheet" href="downloads.css" />
+</head>
+<body>
+  <main id="wrap">
+    <header class="head">
+      <h1>Загрузки</h1>
+      <div class="head-actions">
+        <button id="open-folder" class="btn">Открыть папку загрузок</button>
+        <button id="clear" class="btn danger">Очистить список</button>
+      </div>
+    </header>
+    <div id="list" class="list"></div>
+    <div id="empty" class="empty hidden">Загрузок пока нет.<br />Скачивайте файлы — они появятся здесь с прогрессом и скоростью.</div>
+  </main>
+  <script src="downloads.js"></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Akiri Browser — быстрый современный браузер на движке Chromium: вкладки, пароли, загрузки, история и встроенный AI-ассистент. Бесплатно для Windows." />
+  <title>Akiri Browser — быстрый браузер с AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+      background: #0b1020;
+      color: #e9eaed;
+      line-height: 1.55;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+    /* ---- hero ---- */
+    header {
+      padding: 76px 0 56px;
+      text-align: center;
+      background:
+        radial-gradient(720px 440px at 50% -70px, rgba(91,140,255,.30) 0%, rgba(11,16,32,0) 70%);
+    }
+    .logo {
+      width: 96px; height: 96px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #6ea1ff, #3b66e8);
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 18px 48px rgba(91,140,255,.38);
+      margin-bottom: 24px;
+    }
+    .logo svg { width: 54px; height: 54px; }
+    h1 { font-size: 46px; font-weight: 750; letter-spacing: -0.5px; }
+    .tagline { color: #9fb0d8; font-size: 18px; margin-top: 12px; max-width: 640px; margin-left: auto; margin-right: auto; }
+
+    /* ---- кнопки ---- */
+    .actions { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 14px;
+      font-size: 16px; font-weight: 650; text-decoration: none;
+      cursor: pointer; border: none; transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, #6ea1ff, #3b66e8);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(91,140,255,.35);
+    }
+    .btn-primary:hover { box-shadow: 0 14px 36px rgba(91,140,255,.45); }
+    .btn-ghost {
+      background: transparent; color: #e9eaed;
+      border: 1px solid rgba(255,255,255,.28);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.55); }
+    .btn .ic { width: 20px; height: 20px; }
+
+    .meta-line { color: #6b7696; font-size: 14px; margin-top: 18px; }
+    #versionBadge {
+      display: inline-block; margin-top: 22px;
+      padding: 5px 14px; border-radius: 999px;
+      background: rgba(91,140,255,.12);
+      border: 1px solid rgba(140,175,255,.35);
+      color: #a8c0ff; font-size: 13px;
+    }
+    #versionBadge.error { color: #ffb3a0; border-color: rgba(255,120,90,.4); background: rgba(255,90,60,.08); }
+
+    /* ---- фичи ---- */
+    .features {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px; padding: 24px 0 8px;
+    }
+    .feat {
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 18px; padding: 22px;
+    }
+    .feat h3 { font-size: 17px; font-weight: 650; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .feat p { color: #9fb0d8; font-size: 14.5px; }
+    .feat .em { font-size: 22px; }
+
+    /* ---- что нового ---- */
+    #changelog { display: none; }
+    #changelog.open { display: block; }
+    .changelog-box {
+      margin: 26px auto 0; max-width: 720px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px; padding: 22px 26px;
+      text-align: left;
+    }
+    .changelog-box h2 { font-size: 18px; margin-bottom: 10px; }
+    .changelog-box p { color: #c3cde8; font-size: 15px; white-space: pre-line; }
+
+    footer {
+      text-align: center; color: #6b7696; font-size: 13.5px;
+      padding: 48px 0 40px; margin-top: 30px;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    footer a { color: #8aa5e8; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="logo">
+        <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="27" cy="27" r="21" stroke="#fff" stroke-width="5" opacity=".95"/>
+          <path d="M27 6 C18 16 18 38 27 48 C36 38 36 16 27 6 Z" fill="#fff"/>
+          <circle cx="27" cy="27" r="6.5" fill="#3b66e8" stroke="#fff" stroke-width="3"/>
+        </svg>
+      </div>
+      <h1>Akiri Browser</h1>
+      <p class="tagline">Современный браузер на движке Chromium: вкладки, менеджер паролей,
+        загрузки, история и встроенный AI-ассистент. Данные хранятся только на вашем компьютере.</p>
+      <div class="actions">
+        <a class="btn btn-primary" id="downloadBtn" href="#">
+          <svg class="ic" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M4 17h12"/></svg>
+          <span id="downloadLabel">Скачать установщик</span>
+        </a>
+        <button class="btn btn-ghost" id="whatsNewBtn">Что нового</button>
+      </div>
+      <div id="versionBadge">Проверяю версию…</div>
+      <div class="changelog-box" id="changelog">
+        <h2>Что нового</h2>
+        <p id="changelogText"></p>
+      </div>
+      <p class="meta-line">Windows 10/11 · бесплатно · данные хранятся только на вашем компьютере</p>
+    </div>
+  </header>
+
+  <section class="wrap">
+    <div class="features">
+      <div class="feat"><h3><span class="em">📑</span> Вкладки</h3><p>Перетаскивание, закрепление, восстановление сессии после перезапуска.</p></div>
+      <div class="feat"><h3><span class="em">🔑</span> Менеджер паролей</h3><p>Пароли хранятся локально, в зашифрованном виде, только на вашем ПК.</p></div>
+      <div class="feat"><h3><span class="em">⬇️</span> Загрузки</h3><p>Панель загрузок со скоростью и прогрессом, как в больших браузерах.</p></div>
+      <div class="feat"><h3><span class="em">🕘</span> История</h3><p>Полная история посещений с поиском и подсказками в адресной строке.</p></div>
+      <div class="feat"><h3><span class="em">✨</span> AI-ассистент</h3><p>Встроенный чат с AI прямо в браузере. Работает, только если вы включите его и добавите ключ.</p></div>
+      <div class="feat"><h3><span class="em">🚀</span> Движок Chromium</h3><p>Настоящий Chromium (WebView2): сайты и вход в аккаунты Google работают без сбоев.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      Akiri Browser · <a href="https://github.com/Akira-cpu-ui/akiri-browser" target="_blank" rel="noopener">GitHub</a> ·
+      бесплатно для Windows 10/11
+    </div>
+  </footer>
+
+  <script>
+    // Данные версии: сначала version.json (обновляется автоматически при публикации),
+    // встроенный fallback — на случай, если файл временно недоступен.
+    const FALLBACK = {
+      version: '0.17.1',
+      url: 'https://github.com/Akira-cpu-ui/akiri-browser/releases/download/v0.17.1/akiri-browser-setup-0.17.1.exe',
+      notes: 'Автообновление теперь полностью автоматическое: браузер сам скачивает обновление в фоне и ставит его при закрытии. Исправлена маскировка под Chrome (UA, хинты, заголовки — как у настоящего Chrome).'
+    };
+
+    let data = FALLBACK;
+    const badge = document.getElementById('versionBadge');
+    const dlBtn = document.getElementById('downloadBtn');
+    const dlLabel = document.getElementById('downloadLabel');
+    const chBox = document.getElementById('changelog');
+    const chText = document.getElementById('changelogText');
+
+    function apply(d) {
+      data = d || FALLBACK;
+      dlBtn.href = data.url || FALLBACK.url;
+      dlLabel.textContent = 'Скачать установщик v' + (data.version || FALLBACK.version);
+      badge.textContent = 'Версия ' + (data.version || FALLBACK.version);
+      chText.textContent = data.notes || FALLBACK.notes;
+    }
+
+    fetch('version.json', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('http ' + r.status))))
+      .then((j) => { apply(j); })
+      .catch(() => {
+        apply(FALLBACK);
+        badge.classList.add('error');
+        badge.textContent = 'Файл версии недоступен — показана последняя известная версия';
+      });
+
+    document.getElementById('whatsNewBtn').addEventListener('click', () => {
+      chBox.classList.toggle('open');
+      document.getElementById('whatsNewBtn').textContent = chBox.classList.contains('open') ? 'Скрыть' : 'Что нового';
+    });
+  </script>
+</body>
+</html>

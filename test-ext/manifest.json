@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Akiri Test Extension",
+  "version": "1.0.0",
+  "description": "Тестовое расширение Akiri Browser",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

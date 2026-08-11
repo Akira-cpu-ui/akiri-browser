@@ -1,0 +1,27 @@
+# Сборка и зависимости
+node_modules/
+dist/
+out/
+
+# Установщики и архивы релизов (не в репозитории — они в GitHub Releases)
+release-archives/
+*.exe
+
+# Логи и временные файлы
+*.log
+host.log
+stage1-*.png
+stage2-*.png
+
+# Тестовые сертификаты и захваты
+tools/tls-fingerprint/cert.pem
+tools/tls-fingerprint/key.pem
+tools/tls-fingerprint/*.pem
+tools/tls-fingerprint/out/
+tools/tls-fingerprint/*.log
+
+# Редакторы/ОС
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
